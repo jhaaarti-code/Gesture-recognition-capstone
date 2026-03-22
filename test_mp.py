@@ -46,15 +46,12 @@ while True:
             screen_index_y = screen_height / frame_height * index_y
             pyautogui.moveTo(screen_index_x, screen_index_y)
 
-            # 4. Calculate actual Euclidean distance between thumb and index
             distance = math.hypot(index_x - thumb_x, index_y - thumb_y)
             
-            # 5. Click logic
-            if distance < 30: # 30 pixels on the camera frame (adjust as needed)
+            if distance < 30: # 30 pixels on the camera frame 
                 pyautogui.click()
                 
-                # Replaced sleep(1) with waitKey to prevent freezing the webcam feed entirely, 
-                # though building a time.time() cooldown is even better for production.
+                # Replaced sleep(1) with waitKey to prevent freezing the webcam feed entirely
                 cv2.waitKey(200) 
 
     cv2.imshow('Virtual Mouse', frame)
