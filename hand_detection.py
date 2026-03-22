@@ -1,3 +1,4 @@
+from gesture_recognition import recognize_gesture
 import cv2
 import mediapipe as mp
 
@@ -38,8 +39,14 @@ while True:
                 h, w, _ = frame.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 lmList.append([id, cx, cy])
+                
+        if len(lmList) == 21:
+            gesture = recognize_gesture(lmList)
+            print("Gesture:", gesture)
+            
+            cv2.putText(frame, gesture, (50,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
 
-        print(lmList[:5])  # print first few points
+
 
     cv2.imshow("Hand Detection", frame)
 
