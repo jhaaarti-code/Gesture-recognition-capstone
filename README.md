@@ -1,16 +1,141 @@
-# Gesture-recognition-capstone
+# 🖐️ Virtual Mouse using Hand Gesture Recognition
 
-## ABHINAV JHA - Hand Detection
-Uses MediaPipe to detect the hand through webcam and extract 21 landmark points (finger joints). This is the foundation — all other modules depend on it. Work involves: setting up the camera, running MediaPipe, extracting coordinates, drawing skeleton on screen.
+---
 
-## AARTI JHA - Gesture Recognition
-Takes the 21 landmark points from Member 1 and figures out which gesture the user is making (fist, peace sign, thumbs up, etc.). Work involves: checking which fingers are up/down, classifying 10 gestures, adding a stability filter so gestures don't flicker.
+## 📌 Project Overview
 
-## ADITI JHA - Gesture-to-Action Mapping
-Takes the recognized gesture from Member 2 and actually does something on the computer — volume up/down, play/pause, take screenshot, next slide, etc. Uses PyAutoGUI and pycaw libraries. Work involves: mapping gestures to keyboard/system actions and adding a cooldown timer.
+This project implements a real-time hand gesture recognition system using a webcam.
+It detects hand landmarks and identifies gestures based on finger positions.
 
-## ASHUTOSH JHA - UI/Visual Overlay
-Designs everything the user sees on screen — the gesture name display, finger state indicators (which fingers are up), volume bar, FPS counter, cooldown arc, gesture history. All drawn on the webcam feed using OpenCV drawing functions.
+**Built using:**
+- Python
+- OpenCV
+- MediaPipe (Tasks API)
 
-## PRIYAKRITI JHA - System Integration & Testing
-Combines all 4 modules into one working application (main.py). Also writes the config file, folder structure, unit tests, and gesture logger. This is the "glue" of the project.
+---
+
+## 🎯 Objective
+
+- Detect hand in real-time
+- Extract 21 landmark points
+- Recognize gestures using finger positions
+- Display gesture output live
+
+---
+
+## ⚙️ Features
+
+- Real-time hand tracking
+- 21 landmark detection (`lmList`)
+- Gesture recognition (Fist, Peace, Thumbs Up, etc.)
+- Live gesture display on screen
+- Modular code structure
+
+---
+
+## 🧠 Workflow
+
+```
+Camera → Hand Detection → Landmark Extraction → Gesture Recognition → Output
+```
+
+---
+
+## 👥 Team Contributions
+
+### 👤 Member 1 — Hand Detection
+- Implemented hand detection using MediaPipe
+- Generated 21 landmark points (`lmList`)
+- Handled webcam input and frame processing
+
+### 👤 Member 2 — Gesture Recognition
+- Developed `recognize_gesture(lmList)`
+- Implemented finger detection logic
+- Defined gesture patterns (Fist, Peace, Thumbs Up, etc.)
+
+### 👤 Member 3 — Integration
+- Connected hand detection with gesture module
+- Ensured real-time data flow
+- Handled function calling and coordination
+
+### 👤 Member 4 — UI / Output
+- Displayed gesture on screen using OpenCV
+- Managed visual output and user interaction
+
+### 👤 Member 5 — Testing & Debugging
+- Tested system with different gestures
+- Identified and fixed errors
+- Verified real-time performance
+
+---
+
+## 🗂️ Project Structure
+
+```
+Gesture-recognition-capstone/
+│
+├── hand_detection.py        # Main file
+├── gesture_recognition.py  # Gesture logic
+├── hand_landmarker.task     # MediaPipe model file
+└── README.md
+```
+
+---
+
+## 🚀 How to Run
+
+```bash
+python hand_detection.py
+```
+
+---
+
+## 🎮 Usage
+
+1. Run the program
+2. Show your hand in front of the webcam
+3. Perform gestures — ✊ ✌️ 👍 ✋
+4. Gesture name will be displayed on screen
+
+---
+
+## ⚠️ Errors & Fixes
+
+| Error | Fix |
+|-------|-----|
+| MediaPipe `solutions` deprecated error | Switched to `mp.tasks` API |
+| Virtual environment issues | Recreated `.venv` from scratch |
+| Timestamp error in MediaPipe | Used strictly increasing timestamp |
+| Gesture always showing "Unknown" | Fixed `tipIds` indexing logic |
+| Gesture not displaying on screen | Integrated `recognize_gesture()` properly |
+| Running wrong entry file | Used `hand_detection.py` as main file |
+
+---
+
+## 🧩 Technologies Used
+
+| Tool | Purpose |
+|------|---------|
+| Python | Core programming language |
+| OpenCV | Webcam input & visual output |
+| MediaPipe | Hand landmark detection |
+
+---
+
+## 🔥 Conclusion
+
+This project demonstrates real-time gesture recognition using hand tracking and computer vision, combining MediaPipe's landmark detection with custom gesture logic for a smooth, responsive experience.
+
+---
+
+## 📌 Future Scope
+
+- Mouse control using gestures
+- Support for more gesture types
+- Improved recognition accuracy
+
+---
+
+## 🙌 Acknowledgement
+
+Developed as part of a capstone project using **MediaPipe** and **OpenCV**.
