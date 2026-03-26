@@ -20,17 +20,17 @@ def map_gesture_to_action(gesture):
         pyautogui.press("volumedown")
         print("Volume Down")
     
-    elif gesture == "Thumbs up":
+    elif gesture == "Thumbs Up":
         print("Play Pause")
     
     elif gesture == "Open Hand":
         print("Next Slide")
     
-    elif gesture == "Point":
+    elif gesture == "Pointing Up":
         print("Volume Up")
     
     else:
-        print("Unknown gesture")
+        print("Unknown Gesture")
     
     last_action_time = time.time()
 
@@ -40,10 +40,11 @@ map_gesture_to_action("Fist")
 time.sleep(2)
 map_gesture_to_action("Peace")
 time.sleep(2)
-map_gesture_to_action("Thumbs up")
+map_gesture_to_action("Thumbs Up")
 time.sleep(2)
 map_gesture_to_action("Open Hand")
 time.sleep(2)
-map_gesture_to_action("Point")
+map_gesture_to_action("Pointing Up")
+
 print("--------------------")
 print("Testing complete")
