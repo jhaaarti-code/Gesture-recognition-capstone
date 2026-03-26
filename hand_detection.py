@@ -1,7 +1,10 @@
 from gesture_recognition import recognize_gesture
+from gesture_action_mapper import map_gesture_to_action
 import cv2
 import mediapipe as mp
 import time
+
+cv2.setUseOptimized(True)
 
 # Load model
 BaseOptions = mp.tasks.BaseOptions
@@ -21,9 +24,16 @@ timestamp = 0
 
 pTime = 0  # FPS
 
+prev_gesture = ""
+action = "No Action"
+
 while True:
+    if not cap.isOpened():
+        break
     success, frame = cap.read()
-    if not success:
+    
+    if not success or frame is None:
+        print("Camera error")
         break
 
     frame = cv2.flip(frame, 1)  # mirror view
@@ -38,12 +48,22 @@ while True:
     lmList = []
     gesture = "No Hand"
 
-    if result.hand_landmarks:
+    if result.hand_landmarks: 
         for hand in result.hand_landmarks:
             for id, lm in enumerate(hand):
                 h, w, _ = frame.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 lmList.append([id, cx, cy])
+                
+        if len(lmList) == 21:
+            gesture = recognize_gesture(lmList)
+            
+            
+        if gesture != prev_gesture:
+            action = map_gesture_to_action(gesture)
+            prev_gesture = gesture
+        
+
 
         # ✅ Draw landmarks
         for lm in lmList:
@@ -56,28 +76,25 @@ while True:
                        (9,13),(13,14),(14,15),(15,16),
                        (13,17),(17,18),(18,19),(19,20)]
 
-        for con in connections:
-            x1, y1 = lmList[con[0]][1:]
-            x2, y2 = lmList[con[1]][1:]
-            cv2.line(frame, (x1, y1), (x2, y2), (255, 0, 255), 2)
-
-        # ✅ Gesture detection
         if len(lmList) == 21:
-            gesture = recognize_gesture(lmList)
+            for con in connections:
+                x1, y1 = lmList[con[0]][1:]
+                x2, y2 = lmList[con[1]][1:]
+                cv2.line(frame, (x1, y1), (x2, y2), (255, 0, 255), 2)
 
-            # 🟢 Highlight index finger tip
-            x, y = lmList[8][1], lmList[8][2]
-            cv2.circle(frame, (x, y), 10, (0, 255, 255), cv2.FILLED)
+        # 🟢 Highlight index finger tip
+        x, y = lmList[8][1], lmList[8][2]
+        cv2.circle(frame, (x, y), 10, (0, 255, 255), cv2.FILLED)
 
-            # 🔳 Bounding box
-            xList = [lm[1] for lm in lmList]
-            yList = [lm[2] for lm in lmList]
+        # 🔳 Bounding box
+        xList = [lm[1] for lm in lmList]
+        yList = [lm[2] for lm in lmList]
 
-            xmin, xmax = min(xList), max(xList)
-            ymin, ymax = min(yList), max(yList)
+        xmin, xmax = min(xList), max(xList)
+        ymin, ymax = min(yList), max(yList)
 
-            cv2.rectangle(frame, (xmin-20, ymin-20), (xmax+20, ymax+20),
-                          (255, 0, 255), 2)
+        cv2.rectangle(frame, (xmin-20, ymin-20), (xmax+20, ymax+20),
+                      (255, 0, 255), 2)
 
     # ================= 🎨 AESTHETIC UI ================= #
 
@@ -94,6 +111,10 @@ while True:
     cv2.putText(frame, gesture, (20, 90),
                 cv2.FONT_HERSHEY_SIMPLEX, 1,
                 (0, 255, 255), 3)
+    
+    cv2.putText(frame, action,(20,130),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.8,
+                (255, 255, 255), 2)
 
     # 🎯 Gesture feedback messages
     if gesture == "Fist":
@@ -127,11 +148,15 @@ while True:
                 (255, 255, 0), 2)
 
     # ================================================= #
+    if frame is not None:
+        cv2.imshow("Virtual Gesture UI", frame)
+    try:
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            break
+    except:
+        pass
 
-    cv2.imshow("Virtual Gesture UI", frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
+       
 cap.release()
 cv2.destroyAllWindows()

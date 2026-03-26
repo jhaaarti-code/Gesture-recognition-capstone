@@ -11,13 +11,11 @@ def recognize_gesture(lmList):
         
     # other fingers (y direction)
     for i in range(1,5):
-        print(f"checking finger {i}:tip = {lmList[tipIds[i]][2]}, joint = {lmList[tipIds[i]-2][2]}")
         if lmList[tipIds[i]][2] < lmList[tipIds[i]-2][2]:
             fingers.append(1)
         else:
             fingers.append(0)
         
-    print("Fingers:", fingers)
             
     # Gesture recognition
     if fingers == [0,0,0,0,0]:
@@ -36,7 +34,7 @@ def recognize_gesture(lmList):
         return "Open Hand"
     
     else:
-        return "Unkown Gesture"
+        return "Unknown Gesture"
     
 # TEST CODE
 
@@ -63,10 +61,6 @@ if __name__ == "__main__":
     lmList[20][2] = 300
     lmList[18][2] = 100
 
-    print("Index values:", lmList[8][2], lmList[6][2])
- 
-    
-    print(recognize_gesture(lmList))
     gesture = recognize_gesture(lmList)
     print("Gesture",gesture)
     
