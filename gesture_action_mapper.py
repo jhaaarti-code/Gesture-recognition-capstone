@@ -34,10 +34,6 @@ def map_gesture_to_action(gesture):
     
     
     
-    
-    
-    
-
 if __name__ == "__main__":
     print("Gesture Mapping Test")
     print("--------------------")

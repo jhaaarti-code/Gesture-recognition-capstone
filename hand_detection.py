@@ -76,11 +76,11 @@ while True:
                        (9,13),(13,14),(14,15),(15,16),
                        (13,17),(17,18),(18,19),(19,20)]
 
-        if len(lmList) == 21:
-            for con in connections:
-                x1, y1 = lmList[con[0]][1:]
-                x2, y2 = lmList[con[1]][1:]
-                cv2.line(frame, (x1, y1), (x2, y2), (255, 0, 255), 2)
+        
+        for con in connections:
+            x1, y1 = lmList[con[0]][1:]
+            x2, y2 = lmList[con[1]][1:]
+            cv2.line(frame, (x1, y1), (x2, y2), (255, 0, 255), 2)
 
         # 🟢 Highlight index finger tip
         x, y = lmList[8][1], lmList[8][2]
