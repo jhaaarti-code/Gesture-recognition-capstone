@@ -5,6 +5,7 @@ import gesture_recognition
 import UI 
 import gesture_action_mapper
 
+print("Initializing Camera...")
 cap = cv2.VideoCapture(0)
 last_action_time = 0
 cooldown_time = 1.00
@@ -13,8 +14,10 @@ current_time = time()
 EXIT_KEY = 27            #27 is the keycode for "esc" in openCv
 print("System is Activated. Press 'esc' to quit.")
 
-detector = hand_detection.HandDetector(model_path = 'hand_landmark.task')
+print("Loading Hand Detector...")
+detector = hand_detection.HandDetector(model_path = 'hand_landmarker.task')
 
+print("Starting Loop...")
 while True:
     success, image = cap.read()
     if not success:
