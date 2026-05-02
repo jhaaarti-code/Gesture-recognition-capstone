@@ -4,13 +4,11 @@ def recognize_gesture(lmList, handedness):
 
     fingers = []
 
-    # Thumb Logic: Check if Tip (4) is past Joint (3)[cite: 1]
     if handedness == "Right":
         fingers.append(1 if lmList[4][1] > lmList[3][1] else 0)
     else:
         fingers.append(1 if lmList[4][1] < lmList[3][1] else 0)
 
-    # Fingers Logic: Check if Tip is above middle joint[cite: 1]
     tipIds = [8, 12, 16, 20]
     for id in tipIds:
         if lmList[id][2] < lmList[id-2][2]:
@@ -20,7 +18,6 @@ def recognize_gesture(lmList, handedness):
 
     total = fingers.count(1)
 
-    # Gesture Mapping[cite: 1]
     if total == 0: return "Fist"
     if total == 5: return "Open Hand"
     if fingers == [0, 1, 0, 0, 0]: return "Pointing Up"
