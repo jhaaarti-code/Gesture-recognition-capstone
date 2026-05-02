@@ -1,46 +1,39 @@
 import cv2
-from time import time
-import hand_detection
-import gesture_recognition 
-import UI 
+import time
+from hand_detection import HandDetector
+import gesture_recognition
 import gesture_action_mapper
+import UI
 
-print("Initializing Camera...")
+detector = HandDetector(model_path='hand_landmarker.task')
 cap = cv2.VideoCapture(0)
 last_action_time = 0
-cooldown_time = 1.00
-current_time = time()
+COOLDOWN = 0.6 
 
-EXIT_KEY = 27            #27 is the keycode for "esc" in openCv
-print("System is Activated. Press 'esc' to quit.")
+print("System Active. Exit keys: 'q', 'Esc', or 'Backspace'")
 
-print("Loading Hand Detector...")
-detector = hand_detection.HandDetector(model_path = 'hand_landmarker.task')
-
-print("Starting Loop...")
-while True:
-    success, image = cap.read()
-    if not success:
-        print("Error Camera not Found !")
-        break
+while cap.isOpened():
+    success, frame = cap.read()
+    if not success: break
     
-    flip_image = cv2.flip(image, 1)
+    frame = cv2.flip(frame, 1)
+    timestamp = int(time.time() * 1000)
 
-    lmList = detector.find_hands(flip_image)
-    if lmList:
-        gesture = gesture_recognition.recognize_gesture(lmList)
-        UI.draw_ui(flip_image, gesture)
-        current_time = time()
+    lmList, handedness = detector.find_hands(frame, timestamp)
+    gesture = gesture_recognition.recognize_gesture(lmList, handedness)
 
-        if gesture != "Unknown" and (current_time - last_action_time > cooldown_time):
-            action_name = gesture_action_mapper.perform_action(gesture)
+    if time.time() - last_action_time > COOLDOWN:
+        gesture_action_mapper.perform_action(gesture)
+        last_action_time = time.time()
 
-            last_action_time = current_time
+    frame = UI.apply_ui(frame, gesture, handedness, lmList)
+    
+    cv2.imshow("Gesture Control Hub", frame)
 
-    cv2.imshow ("GestureX", flip_image)
-    if cv2.waitKey(1) & 0xFF == EXIT_KEY:
+    key = cv2.waitKey(1) & 0xFF
+    if key in [ord('q'), 27, 8]:
         break
 
 cap.release()
 cv2.destroyAllWindows()
-print("GestureX Closed Sucessfully !")
+detector.close()
