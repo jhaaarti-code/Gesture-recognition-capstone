@@ -10,9 +10,7 @@ CONNECTIONS = [
 ]
 
 def apply_ui(frame, gesture, handedness, lmList):
-    """
-    Member 4's logic: Takes the camera frame and detection data to draw the interface.
-    """
+    
     overlay = frame.copy()
     cv2.rectangle(overlay, (0, 0), (frame.shape[1], 65), (40, 40, 40), -1)
     cv2.addWeighted(overlay, 0.7, frame, 0.3, 0, frame)
