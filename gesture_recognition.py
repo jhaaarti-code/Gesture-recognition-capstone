@@ -1,72 +1,30 @@
-tipIds = [4,8,12,16,20]
+def recognize_gesture(lmList, handedness):
+    if not lmList:
+        return "No Hand"
 
-def recognize_gesture(lmList):
-    
     fingers = []
-    # Thumb (x direction)
-    if lmList[4][1] > lmList[3][1]:
-        fingers.append(1)
+
+    # Thumb Logic: Check if Tip (4) is past Joint (3)[cite: 1]
+    if handedness == "Right":
+        fingers.append(1 if lmList[4][1] > lmList[3][1] else 0)
     else:
-        fingers.append(0)
-        
-    # other fingers (y direction)
-    for i in range(1,5):
-        if lmList[tipIds[i]][2] < lmList[tipIds[i]-2][2]:
+        fingers.append(1 if lmList[4][1] < lmList[3][1] else 0)
+
+    # Fingers Logic: Check if Tip is above middle joint[cite: 1]
+    tipIds = [8, 12, 16, 20]
+    for id in tipIds:
+        if lmList[id][2] < lmList[id-2][2]:
             fingers.append(1)
         else:
             fingers.append(0)
-        
-            
-    # Gesture recognition
-    if fingers == [0,0,0,0,0]:
-        return "Fist"
-    
-    elif fingers == [0,1,1,0,0]:
-        return "Peace"
-    
-    elif fingers == [1,0,0,0,0]:
-        return "Thumbs Up"
-    
-    elif fingers == [0,1,0,0,0]:
-        return "Pointing Up"
-    
-    elif fingers == [1,1,1,1,1]:
-        return "Open Hand"
-    
-    else:
-        return "Unknown Gesture"
-    
-# TEST CODE
 
-if __name__ == "__main__":
-    lmList = [[i,0,0] for i in range(21)]
-    
-    #Thumb Down
-    lmList[4][1] = 100
-    lmList[3][1] = 200
-    
-    # Index Up
-    lmList[8][2] = 50
-    lmList[6][2] = 200
-    
-    # Middle Up
-    lmList[12][2] = 50
-    lmList[10][2] = 200
-    
-    # Ring Down
-    lmList[16][2] = 300
-    lmList[14][2] = 100
-    
-    # Pinky Down
-    lmList[20][2] = 300
-    lmList[18][2] = 100
+    total = fingers.count(1)
 
-    gesture = recognize_gesture(lmList)
-    print("Gesture",gesture)
+    # Gesture Mapping[cite: 1]
+    if total == 0: return "Fist"
+    if total == 5: return "Open Hand"
+    if fingers == [0, 1, 0, 0, 0]: return "Pointing Up"
+    if fingers == [0, 1, 1, 0, 0]: return "Peace"
+    if fingers == [1, 0, 0, 0, 0]: return "Thumbs Up"
     
-    
-    
-    
-
-    
-        
+    return "Neutral"
