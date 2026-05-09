@@ -1,4 +1,4 @@
-# 🖐️ Virtual Mouse using Hand Gesture Recognition
+# 🖐️ GestureX - Hand Gesture Recognition System
 
 ---
 
@@ -53,19 +53,21 @@ Camera → Hand Detection → Landmark Extraction → Gesture Recognition → Ou
 - Implemented finger detection logic
 - Defined gesture patterns (Fist, Peace, Thumbs Up, etc.)
 
-### 👤 Member 3 — Integration
-- Connected hand detection with gesture module
-- Ensured real-time data flow
-- Handled function calling and coordination
+### 👤 Member 3 — Gesture to Action Mapping
+- Developed the gesture-to-action mapping module
+- Mapped recognized gestures to specific system actions (e.g., volume control, play/pause, navigation)
+- Implemented logic to trigger corresponding actions based on detected gestures
+  
+  
 
 ### 👤 Member 4 — UI / Output
 - Displayed gesture on screen using OpenCV
 - Managed visual output and user interaction
 
-### 👤 Member 5 — Testing & Debugging
-- Tested system with different gestures
-- Identified and fixed errors
-- Verified real-time performance
+### 👤 Member 5 — Integration and Execution
+- Integrated all modules including hand detection, gesture recognition, and action mapping into a single system
+- Ensured smooth data flow between different components
+- Managed overall execution of the system for real-time performance
 
 ---
 
