@@ -17,11 +17,19 @@ def recognize_gesture(lmList, handedness):
             fingers.append(0)
 
     total = fingers.count(1)
+    # Debug: print finger pattern and totals
+    # fingers = [thumb, index, middle, ring, pinky]
+    print(f"gesture_recognition: fingers={fingers} total={total} handedness={handedness}")
 
-    if total == 0: return "Fist"
-    if total == 5: return "Open Hand"
-    if fingers == [0, 1, 0, 0, 0]: return "Pointing Up"
-    if fingers == [0, 1, 1, 0, 0]: return "Peace"
-    if fingers == [1, 0, 0, 0, 0]: return "Thumbs Up"
-    
+    if total == 0:
+        return "Fist"
+    if total == 5:
+        return "Open Hand"
+    if fingers == [0, 1, 0, 0, 0]:
+        return "Pointing Up"
+    if fingers == [0, 1, 1, 0, 0]:
+        return "Peace"
+    if fingers == [1, 0, 0, 0, 0]:
+        return "Thumbs Up"
+
     return "Neutral"
