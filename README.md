@@ -27,7 +27,8 @@ It detects hand landmarks and identifies gestures based on finger positions.
 
 - Real-time hand tracking
 - 21 landmark detection (`lmList`)
-- Gesture recognition (Fist, Peace, Thumbs Up, etc.)
+- Gesture recognition (Fist, Peace, Thumbs Up, Zoom, Call, etc.)
+- Support for both left and right hand orientations
 - Live gesture display on screen
 - Modular code structure
 
@@ -98,6 +99,20 @@ python hand_detection.py
 2. Show your hand in front of the webcam
 3. Perform gestures — ✊ ✌️ 👍 ✋
 4. Gesture name will be displayed on screen
+
+---
+## 📸 Screenshots
+
+### ✊ Fist Gesture
+<img width="1222" height="656" alt="image" src="https://github.com/user-attachments/assets/cdcbdb78-2374-49b9-80c9-93745f6bc3eb" />
+### ☝️ Pointing Up Gesture
+<img width="1227" height="638" alt="image" src="https://github.com/user-attachments/assets/2e0fc4e7-be47-4a30-95b6-d41a832b8a2c" />
+### ✌️ Peace Gesture
+<img width="1224" height="655" alt="image" src="https://github.com/user-attachments/assets/c6f35572-d295-4a34-8f78-42d184f60f54" />
+### 👍 Thumbs Up Gesture
+<img width="1138" height="645" alt="image" src="https://github.com/user-attachments/assets/df767908-0b8c-4b1a-acbb-a16c2ff98f30" />
+### 🖐️ Open Hand Gesture
+<img width="1210" height="668" alt="image" src="https://github.com/user-attachments/assets/ea5fa32b-f8bf-4264-a4db-0acf8547f6c8" />
 
 ---
 
